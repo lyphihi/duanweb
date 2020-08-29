@@ -11,7 +11,7 @@
     include_once(__DIR__ . '/../dbconnect.php');
     $sql = <<<LPH
     select httt_ma as MaThanhToan, httt_ten as TenThanhToan from `hinhthucthanhtoan`;
-LPH;
+    LPH;
     $result = mysqli_query($conn, $sql);
     $data = [];
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
@@ -25,13 +25,11 @@ LPH;
     <tr>
     <td>Mã thanh toán</td>
     <td>Tên thanh toán</td>
-    <td>Hanh dong</td>
     </tr>
     <?php foreach($data as $httt): ?>
     <tr>
     <td> <?php echo $httt['ma']; ?> </td>
     <td> <?php echo $httt['ten']; ?> </td>
-    <td> <a href="xuly_xoa.php?idmuonxoa=<?php echo $httt['ma']?>" > Xoa </a> </td>
     </tr>
     <?php endforeach; ?>
     </table>

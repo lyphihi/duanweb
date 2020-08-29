@@ -3,26 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lệnh INSERT</title>
+    <title>them du lieu</title>
 </head>
 <body>
-    <h2>Thêm mới dữ liệu</h2>
-    <form name="frmtm" id="frmtm" method="POST" action="">
-    <input type="text" name="themmoi" id="themmoi"> <br>
-    <input type="submit" name="luudl" id="luudl" value="Lưu dữ liệu">
+    <h2>Them moi trong form</h2>
+    <form name="themmoi" id="themmoi" method="post" action="">
+    <table>
+    <tr>
+        <td>Them ten hinh thuc thanh toan</td>
+    </tr>
+    <tr>
+        <td><input type="text" name="TenThanhToan" id="TenThanhToan"></td>
+    </tr>
+    <tr>
+        <td><input type="submit" name="btntm" id="btntm" value="Luu du lieu"></td>
+    </tr>
+    </table>
     </form>
-    
-    <?php
-        if(isset($_POST['luudl'])){
-            $httt_ten = $_POST['themmoi'];
 
-            ////1
-            include_once(__DIR__ . '/dbconnect.php');
-            ////2
-            $sql = "INSERT INTO `hinhthucthanhtoan`(httt_ten) VALUES('$httt_ten');";
-            // 3. Thực thi
-            mysqli_query($conn, $sql);
-        }
+    <?php 
+    if(isset($_POST['btntm'])){
+        $httt_ten = $_POST['TenThanhToan'];
+
+        include_once(__DIR__ . '/../dbconnect.php');
+        $sql = "insert into `hinhthucthanhtoan`(httt_ten) values ('$httt_ten') ";
+        mysqli_query($conn, $sql);
+    }
     ?>
 </body>
 </html>

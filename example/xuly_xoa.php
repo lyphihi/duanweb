@@ -1,12 +1,10 @@
 <?php
-    $idmuonxoa = $_GET['idmuonxoa'];
-    ////1
-    include_once(__DIR__ . '/dbconnect.php');
-    ////2
+$idmuonxoa = $_GET['idmuonxoa'];
+
+include_once(__DIR__ . '/../dbconnect.php');
     $sql = <<<LPH
     delete from `hinhthucthanhtoan`
-    where httt_ma= $idmuonxoa;
-    LPH;
-    // 3. Thực thi
+    where httt_ma = $idmuonxoa;
+LPH;
     mysqli_query($conn, $sql);
 ?>

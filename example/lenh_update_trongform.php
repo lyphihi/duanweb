@@ -3,39 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lệnh update</title>
+    <title>Lệnh select</title>
 </head>
 <body>
-    <h2>Thực thi câu lệnh update trong form</h2>
+    <h2>Thực thi câu lệnh SELECT trong php</h2>
     <?php
-
-    include_once(__DIR__ . '/dbconnect.php');
+    // lay thong tin cu
+    include_once(__DIR__ . '/../dbconnect.php');
     $sql = <<<LPH
-    select httt_ma, httt_ten from `hinhthucthanhtoan`;
+    select httt_ma as MaThanhToan, httt_ten as TenThanhToan from `hinhthucthanhtoan`;
 LPH;
     $result = mysqli_query($conn, $sql);
-    $data = [];
+    $dataRow = [];
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-        $data[] = array(
-        'ma' => $row['httt_ma'],
-        'ten' => $row['httt_ten'],
+        $dataRow = array(
+        'ma' => $row['MaThanhToan'],
+        'ten' => $row['TenThanhToan'],
         );
     }
     ?>
-    <table border="1">
+    
+    <form name="themmoi" id="themmoi" method="post" action="">
+    <table>
     <tr>
-    <td>Mã thanh toán</td>
-    <td>Tên thanh toán</td>
-    <td>Hành động</td>
+        <td>sua hinh thuc thanh toan</td>
     </tr>
-    <?php foreach($data as $httt): ?>
     <tr>
-    <td> <?php echo $httt['ma']; ?> </td>
-    <td> <?php echo $httt['ten']; ?> </td>
-    <td> <a href="xuly_xoa.php?idmuonxoa=<?php echo $httt['ma']; ?>">Xóa</a> 
-    <a href="xuly_update.php?idmuonsua=<?php echo $httt['ma']; ?>">Sửa</a></td>
+        <td><input type="text" name="TenThanhToan" id="TenThanhToan" value="<?php echo $dataRow['ten']?>"></td>
     </tr>
-    <?php endforeach; ?>
+    <tr>
+        <td><input type="submit" name="btntm" id="btntm" value="Luu du lieu"></td>
+    </tr>
     </table>
+    </form>
+   
 </body>
 </html>
