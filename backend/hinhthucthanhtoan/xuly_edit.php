@@ -7,7 +7,7 @@
 </head>
 <body>
 <?php
-        include_once(__DIR__ . '/../dbconnect.php');
+        include_once(__DIR__ . '/../../dbconnect.php');
         //lấy lại thông tin dòng muốn chỉnh sửa
         $idmuonsua = $_GET['idmuonsua'];
         $sql = <<<LPH
@@ -33,7 +33,7 @@ LPH;
         if(isset($_POST['suadl'])){
             $httt_ten = $_POST['txtupdate'];
             ////1
-            include_once(__DIR__ . '/../dbconnect.php');
+            include_once(__DIR__ . '/../../dbconnect.php');
             ////2
             $sql = <<<LPH
             update hinhthucthanhtoan

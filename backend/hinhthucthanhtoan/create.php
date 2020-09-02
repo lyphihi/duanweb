@@ -77,14 +77,14 @@
         if( isset($_POST['btntm'])){
             $httt_ten = $_POST['TenThanhToan'];
 
-            // print_r($httt_ten); die;
+            //print_r($httt_ten); die;
             // Kiểm tra ràng buộc dữ liệu (Validation)
             // Tạo biến lỗi để chứa thông báo lỗi
             $errors = [];
             // Validate Ten hinh thuc thanh toan
             // rule: required
             if(empty($httt_ten)) {
-                $errors['httt_ten'][] = [
+                $errors['TenThanhToan'][] = [
                     'rule' => 'required',
                     'rule_value' => true,
                     'value' => $httt_ten,
@@ -94,7 +94,7 @@
             }
             // minlength 3
             if(!empty($httt_ten) && strlen($httt_ten) < 3) {
-                $errors['httt_ten'][] = [
+                $errors['TenThanhToan'][] = [
                     'rule' => 'minlength',
                     'rule_value' => 3,
                     'value' => $httt_ten,
@@ -104,7 +104,7 @@
             }
             // maxlength 50
             if(!empty($httt_ten) && strlen($httt_ten) >50) {
-                $errors['httt_ten'][] = [
+                $errors['TenThanhToan'][] = [
                     'rule' => 'maxlength',
                     'rule_value' => 50,
                     'value' => $httt_ten,
@@ -115,10 +115,51 @@
         }
 
     ?>
-
     <?php
+        if(isset($_POST['btntm'])
+            && isset($errors)
+            && !isset($errors)):
+    ?>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <!--Thong bao loi -->
+        <ul>
+            <?php foreach ($errors as $fields) : ?>
+                <?php foreach ($fields as $field) : ?>
+                <li><?php echo $field['msg']; ?></li>
+                <?php endforeach; ?>
+                <?php endforeach; ?>
+        </ul>
+
+        </div>
+            <?php endif; ?>
+        </div>
+    <?php 
+        // Nếu không có lỗi VALIDATE dữ liệu (tức là dữ liệu đã hợp lệ)
+        // Tiến hành thực thi câu lệnh SQL Query Database
+        // => giá trị của biến $errors là rỗng
+        if (
+            isset($_POST['btntm'])  // Nếu người dùng có bấm nút "Lưu dữ liệu"
+            && (!isset($errors) || (empty($errors))) // Nếu biến $errors không tồn tại Hoặc giá trị của biến $errors rỗng
+        ) {
+            // VALIDATE dữ liệu đã hợp lệ
+            // Thực thi câu lệnh SQL QUERY
+            // Câu lệnh INSERT
+            $sql = "INSERT INTO `hinhthucthanhtoan` (category_code, category_name, description) VALUES ('$category_code', '$category_name', '$description');";
+            // Thực thi INSERT
+            mysqli_query($conn, $sql) or die("<b>Có lỗi khi thực thi câu lệnh SQL: </b>" . mysqli_error($conn) . "<br /><b>Câu lệnh vừa thực thi:</b></br>$sql");
+            // Đóng kết nối
+            mysqli_close($conn);
+            // Sau khi cập nhật dữ liệu, tự động điều hướng về trang Danh sách
+            // Điều hướng bằng Javascript
+            echo '<script>location.href = "index.php";</script>';
+        }
 
     ?>
+
+    
     <!-- footer -->
     <?php 
     include_once(__DIR__ . '/../layouts/partials/footer.php');
