@@ -54,7 +54,7 @@
             <tr>
             <td> <?php echo $httt['ma']; ?> </td>
             <td> <?php echo $httt['ten']; ?> </td>
-            <td> <a href="#"<?php  ?>>Xóa</a> 
+            <td> <a href="xuly_delete.php?idmuonxoa=<?php echo $httt['ma']; ?>">Xóa</a>
             <a href="xuly_edit.php?idmuonsua=<?php echo $httt['ma']; ?>">Sửa</a></td>
             </tr>
             <?php endforeach; ?>

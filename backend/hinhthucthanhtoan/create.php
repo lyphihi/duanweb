@@ -69,7 +69,7 @@
     </div>
 
     <!-- Phan tich nguoi dung gui den server -->
-    <?php
+<?php
     // Truy vấn database
         // 1. Include file cấu hình kết nối đến database, khởi tạo kết nối $conn
         include_once(__DIR__ . '/../../dbconnect.php');
@@ -136,29 +136,27 @@
         </div>
             <?php endif; ?>
         </div>
-    <?php 
-        // Nếu không có lỗi VALIDATE dữ liệu (tức là dữ liệu đã hợp lệ)
-        // Tiến hành thực thi câu lệnh SQL Query Database
-        // => giá trị của biến $errors là rỗng
-        if (
-            isset($_POST['btntm'])  // Nếu người dùng có bấm nút "Lưu dữ liệu"
-            && (!isset($errors) || (empty($errors))) // Nếu biến $errors không tồn tại Hoặc giá trị của biến $errors rỗng
-        ) {
-            // VALIDATE dữ liệu đã hợp lệ
-            // Thực thi câu lệnh SQL QUERY
-            // Câu lệnh INSERT
-            $sql = "INSERT INTO `hinhthucthanhtoan` (category_code, category_name, description) VALUES ('$category_code', '$category_name', '$description');";
-            // Thực thi INSERT
-            mysqli_query($conn, $sql) or die("<b>Có lỗi khi thực thi câu lệnh SQL: </b>" . mysqli_error($conn) . "<br /><b>Câu lệnh vừa thực thi:</b></br>$sql");
-            // Đóng kết nối
-            mysqli_close($conn);
-            // Sau khi cập nhật dữ liệu, tự động điều hướng về trang Danh sách
-            // Điều hướng bằng Javascript
-            echo '<script>location.href = "index.php";</script>';
-        }
-
-    ?>
-
+        <?php
+            // Nếu không có lỗi VALIDATE dữ liệu (tức là dữ liệu đã hợp lệ)
+            // Tiến hành thực thi câu lệnh SQL Query Database
+            // => giá trị của biến $errors là rỗng
+            if (
+                    isset($_POST['btntm'])  // Nếu người dùng có bấm nút "Lưu dữ liệu"
+                    && (!isset($errors) || (empty($errors))) // Nếu biến $errors không tồn tại Hoặc giá trị của biến $errors rỗng
+                ) {
+                    // VALIDATE dữ liệu đã hợp lệ
+                    // Thực thi câu lệnh SQL QUERY
+                    // Câu lệnh INSERT
+                    $sql = "INSERT INTO `hinhthucthanhtoan` (httt_ma, httt_ten) VALUES ('$httt_ma', '$httt_ten');";
+                    // Thực thi INSERT
+                    mysqli_query($conn, $sql) or die("<b>Có lỗi khi thực thi câu lệnh SQL: </b>" . mysqli_error($conn) . "<br /><b>Câu lệnh vừa thực thi:</b></br>$sql");
+                    // Đóng kết nối
+                    mysqli_close($conn);
+                    // Sau khi cập nhật dữ liệu, tự động điều hướng về trang Danh sách
+                    // Điều hướng bằng Javascript
+                    echo '<script>location.href = "index.php";</script>';
+                }
+        ?>
     
     <!-- footer -->
     <?php 
@@ -167,5 +165,43 @@
     <!-- end footer -->
 
     <?php include_once(__DIR__ . '/../layouts/scripts.php'); ?>
+
+    <script>
+    $(document).ready(function() {
+        // $("#themmoi").validate({
+        //     rules: {
+        //         TenThanhToan: {
+        //             required: true,
+        //             minlength: 3,
+        //             maxlength: 50
+        //         }
+        //     },
+        //     messages: {
+        //         TenThanhToan: {
+        //             required: "Vui lòng nhập Tên hình thức thanh toán",
+        //             minlength: "Tên hình thức thanh toán phải có ít nhất 3 ký tự",
+        //             maxlength: "Tên hình thức thanh toán không được vượt quá 50 ký tự"
+        //         }
+        //     },
+        //     errorElement: "em",
+        //     errorPlacement: function(error, element) {
+        //         // Thêm class `invalid-feedback` cho field đang có lỗi
+        //         error.addClass("invalid-feedback");
+        //         if (element.prop("type") === "checkbox") {
+        //             error.insertAfter(element.parent("label"));
+        //         } else {
+        //             error.insertAfter(element);
+        //         }
+        //     },
+        //     success: function(label, element) {},
+        //     highlight: function(element, errorClass, validClass) {
+        //         $(element).addClass("is-invalid").removeClass("is-valid");
+        //     },
+        //     unhighlight: function(element, errorClass, validClass) {
+        //         $(element).addClass("is-valid").removeClass("is-invalid");
+        //     }
+        // });
+    });
+    </script>
 </body>
 </html>
