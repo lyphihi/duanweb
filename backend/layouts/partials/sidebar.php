@@ -27,6 +27,21 @@
         </ul>
       </li>
       <!-- End Menu Chuyên mục sản phẩm -->
+       <!-- Menu Sản phẩm -->
+       <li class="nav-item">
+        <a href="#sanphamSubMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+          Sản phẩm
+        </a>
+        <ul class="collapse" id="sanphamSubMenu">
+          <li class="nav-item">
+            <a href="/backend/functions/sanpham/index.php">Danh sách</a>
+          </li>
+          <li class="nav-item">
+            <a href="/backend/functions/sanpham/create.php">Thêm mới</a>
+          </li>
+        </ul>
+      </li>
+      <!-- End Sản phẩm -->
       <!-- #################### End Menu chức năng Danh mục #################### -->
     </ul>
   </div>

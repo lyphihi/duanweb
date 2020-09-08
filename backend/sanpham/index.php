@@ -7,6 +7,8 @@
     <?php 
     include_once(__DIR__ . '/../layouts/styles.php');
     ?>
+    <link href="/duanweb/assets/vendor/DataTables/datatables.css" type="text/css" rel="stylesheet" />
+    <link href="/duanweb/assets/vendor/DataTables/Buttons-1.6.3/css/buttons.bootstrap4.min.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
     
@@ -71,7 +73,8 @@ LPH;
             }
             ?>
             <a href="create.php" class="btn btn-primary">Thêm mới</a>
-            <table class="table table-bordered table-hover mt-2">
+            <table id="tbDanhsach" class="table table-bordered table-hover mt-2">
+            <thead>
             <tr>
                 <td>Mã sản phẩm</td>
                 <td>Tên sản phẩm</td>
@@ -82,6 +85,8 @@ LPH;
                 <td>Khuyến mãi</td>
                 <td>Hành động</td>
             </tr>
+            </thead>
+            <tbody>
             <?php foreach($data as $sp): ?>
             <tr>
             <td> <?php echo $sp['sp_ma']; ?> </td>
@@ -92,11 +97,12 @@ LPH;
             <td> <?php echo $sp['nsx_ten']; ?> </td>
             <td> <?php echo $sp['km_tomtat']; ?> </td>
             <td>  
-            <a href="delete.php?idmuonxoa=<?php echo $sp['sp_ma']; ?>">Xóa</a>
-            <a href="edit.php?idmuonsua=<?php echo $sp['sp_ma']; ?>">Sửa</a>
+            <a href="delete.php?idmuonxoa=<?php echo $sp['sp_ma']; ?>">Sua</a>
+            <button class="btn btn-danger btnDelete" data-sp_ma="<?php echo $sp['sp_ma']; ?>">Xoa</button>
             </td>
             </tr>
             <?php endforeach; ?>
+            </tbody>
             </table>
 
             </div>
@@ -111,5 +117,51 @@ LPH;
     <!-- end footer -->
 
     <?php include_once(__DIR__ . '/../layouts/scripts.php'); ?>
+    <script src="/duanweb/assets/vendor/DataTables/datatables.min.js"></script>
+    <script src="/duanweb/assets/vendor/DataTables/Buttons-1.6.3/js/buttons.bootstrap4.min.js"></script>
+    <script src="/duanweb/assets/vendor/DataTables/pdfmake-0.1.36/pdfmake.min.js"></script>
+    <script src="/duanweb/assets/vendor/DataTables/pdfmake-0.1.36/vfs_fonts.js"></script>
+
+    <script src="/duanweb/assets/vendor/sweetalert/sweetalert.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        // xử lý table danh sách
+        $('#tbDanhsach').DataTable({
+            dom: 'Blfrtip',
+            buttons: [
+                'copy', 'excel', 'pdf'
+            ]
+        });
+        // Cảnh báo khi xóa
+        // 1. Đăng ký sự kiện click cho các phần tử (element) đang áp dụng class .btnDelete
+        $('.btnDelete').click(function() {
+            // Click hanlder
+            // Hiện cảnh báo khi bấm nút xóa
+            swal({
+                title: "Bạn có chắc chắn muốn xóa?",
+                text: "Một khi đã xóa, không thể phục hồi....",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                debugger;
+                if (willDelete) { // Nếu đồng ý xóa
+                    
+                    // 2. Lấy giá trị của thuộc tính (custom attribute HTML) 'sp_ma'
+                    // var sp_ma = $(this).attr('data-sp_ma');
+                    var sp_ma = $(this).data('sp_ma');
+                    var url = "delete.php?sp_ma=" + sp_ma;
+                    
+                    // Điều hướng qua trang xóa với REQUEST GET, có tham số sp_ma=...
+                    location.href = url;
+                } else {
+                    swal("Cẩn thận hơn nhé!");
+                }
+            });
+           
+        });
+    });
+    </script>
 </body>
 </html>
